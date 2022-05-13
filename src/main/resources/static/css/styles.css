@@ -1,0 +1,315 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #ccc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+body {
+    background-color: #f8f8f8;
+}
+
+.loginDiv {
+    margin: 20vh auto;
+    width: 500px;
+    border-radius: 20px;
+}
+
+.logoHolder {
+    border-radius: 5px;
+    width: 100px;
+    height: 100px;
+    margin-top: -90px;
+}
+
+input.loginField {
+
+    border: none;
+    border-radius: 50px;
+    background-color: #F2F2F2;
+    border-color: #b1b1b1;
+    width: 80%;
+}
+
+.titleHeader{
+    color: #FE0000;
+    text-align: center;
+}
+
+.loginbtn {
+    background-color: #F91212;
+    border: none;
+    border-radius: 20px;
+
+}
+
+.header{
+    height: 100px;
+}
+
+.pageLogo {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+}
+
+.logout {
+    color: #F91212;
+}
+
+.accounting-profile-wrap {
+    height: 170px;
+}
+
+.user-list-wrap {
+    height: 47vh;
+}
+
+.sectionLabel {
+    font-size: 14px;
+    color: #F91212;
+}
+
+.contentLabel {
+    color: #F91212;
+}
+
+.profile-info, .submitClaim-wrap, .claims-table-wrap {
+    border-radius: 15px;
+}
+
+.claim-content-wrap {
+    border-right: 1px solid rgba(197, 197, 197, 0.5);
+}
+
+.userList-info{
+    border-radius: 15px;
+    max-height: 45vh;
+    min-height: 45vh;
+}
+
+.profile-action {
+    height: 18px;
+    width: 70px;
+}
+
+.submitClaim {
+    background-color: #F91212;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+}
+
+.submitClaim:hover {
+    background-color: #ff5f5f;
+}
+
+.form-control {
+    outline:none;
+    border-radius: 10px;
+}
+
+.profile-act {
+    height: 15px;
+    width: 15px;
+}
+
+.id-display {
+    color: #FF8D8D;
+}
+
+.claimStatusDisplay {
+    border-radius: 100px;
+    background-color: #fff;
+    width: 15px;
+    height: 15px;
+}
+
+.name-display {
+    color: #4F4F4F;
+    font-size: 16px;
+}
+.email-display {
+    color: #787878;
+    font-size: 14px;
+}
+.modal-body-label {
+    color: #F91212;
+}
+
+.user_type, .claim_date, .claim_status{
+    border-radius: 15px;
+    outline: none;
+    width: 50px;
+    border: none;
+}
+
+.logout {
+    text-decoration: none;
+}
+
+.label-modal{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.label-body {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4F4F4F;
+}
+
+.modalField {
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #F2F2F2;
+    border-color: #b1b1b1;
+    border: none;
+    outline: none;
+}
+
+.modal-dropdown {
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: #F2F2F2;
+    border-color: #b1b1b1;
+    border: none;
+}
+
+.standard-info {
+    font-size: 12px;
+    color: #FF8D8D;
+    font-weight: 600;
+}
+
+.cancelModal {
+    border: none;
+    background-color: #fff;
+    margin: 10px;
+}
+
+.confirmModal {
+    padding: 10px 15px;
+    background-color: #F91212;
+    color: #fff;
+    border-radius: 500px;
+    border: none;
+}
+
+.user-wrap {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.borderIni {
+    border-bottom: 0.7px solid #ffe6e6;
+}
+
+.userData-name {
+    color: #4F4F4F;
+}
+
+.userData-userType {
+    color: #FF8D8D;
+    font-size: 12px;
+}
+
+.sessionPassChange {
+    border: none;
+    border-radius: 100px;
+    background-color: #F91212;
+    color: #fff;
+    font-size: 12px;
+}
+
+.claimActionButton {
+    border: none;
+    border-radius: 10px;
+    background-color: #F91212;
+    color: #fff;
+    font-size: 12px;
+}
+
+.redStatus {
+    background-color: #ff003c;
+}
+
+.greenStatus {
+    background-color: #00ff3c;
+}
+
+.greetings {
+    font-size: 18px;
+    color: #606060;
+}
+
+thead {
+    background-color: #fff;
+}
+
+thead th {
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+}
+
+th {
+    font-size: 14px;
+    font-weight: 600;
+    color: #9A9A9A;
+    text-align: center;
+}
+
+.claims-list-data {
+    min-height: 61vh;
+    max-height: 61vh;
+    overflow-y:auto;
+    padding-bottom: 15px;
+}
+
+tbody tr:hover {
+    background-color: #f7f7f7;
+}
+
+td {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 0px;
+    color: #5E5E5E;
+}
+
+tr {
+    min-width: 80vh;
+}
+
+tbody tr{
+    border-bottom: 0.5px solid rgba(197, 197, 197, 0.5);
+}
+
+tbody {
+    overflow-y: auto;
+}

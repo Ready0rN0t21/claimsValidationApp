@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/css/styles.css" th:href="@{/css/styles.css}">
+        <title>Emp-Homepage</title>
+    </head>
+    <body class="container">
+        <div class="header py-3 w-100 d-flex justify-content-between align-items-center">
+            <div class="pageLogo p-1 shadow">
+                <img th:src="@{/images/alliance_logo.svg}" class="img-fluid mx-auto">
+            </div>
+            <a class="logout" th:href="@{/user/logout}"><p class="fs-6 fw-bold logout">Logout</p></a>
+        </div>
+        <section class="row" style="height: 70vh;">
+            <section class="employee-profile-wrap mb-3 col-5">
+                <p class="sectionLabel fw-bold mb-2">Profile</p>
+                <p class="id-display d-none" th:text="${session.User.id}"></p>
+                <div class="profile-info bg-white shadow">
+                    <div class="profile-header px-4 pt-3 pb-1 d-flex justify-content-between align-items-center">
+                        <p class="greetings fw-bold m-0">Hello,</p>
+                        <p class="greetings m-0 fs-7" th:text="${'Today is '+ #dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></p>
+                    </div>
+                    <div class="profile-body px-4 pb-3">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="name-display fs-5 fw-bold mb-0 me-3" th:text="${session.User.firstName +' '+session.User.lastName}"></p>
+                                <p class="email-display fs-6 fw-normal m-0" th:text="${session.User.email}"></p>
+                                <p class="userData-userType fw-normal fw-bold mb-3" th:text="${session.User.usertype}"></p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-start">
+                            <button id="editSessionUserPassword" class="sessionPassChange py-1 px-3" data-toggle="modal"
+                                    data-target="#editSessionUserPasswordModal">Change password</button>
+                            <button id="editSessionUserName" class="sessionPassChange py-1 px-3 mx-2" data-toggle="modal" data-target="#editSessionUserNameModal"
+                                    >Edit name</button>
+                            <button id="deleteSessionUser" class="sessionPassChange py-1 px-3" data-toggle="modal" data-target="#deleteSessionUserModal"
+                            >Delete account</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-7">
+                <p class="sectionLabel fw-bold mb-2">Submit a claim</p>
+                <form th:action="@{/claim/addClaim}" method="POST" enctype="multipart/form-data">
+                    <div class="d-flex align-items-center">
+                        <div class="submitClaim-wrap bg-white shadow pt-4 pb-3 ps-4 pe-5" style="width: 100%;">
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <p class="label-body m-0">Company</p>
+                                <input type="text" id="company" name="company" class="modalField px-3 py-1 w-75" required />
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <p class="label-body m-0">File attachment</p>
+                                <input class="form-control form-control-sm w-75" name="invoice" type="file" required />
+                            </div>
+                            <button class="px-3 py-1 mt-3 shadow submitClaim float-end shadow" id="submitClaim" type="submit">
+                                <img th:src="@{/images/send.svg}" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </section>
+        <!-- Modal edit user name triggered by editSessionUserName-->
+        <div class="modal fade center" id="editSessionUserNameModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6>Edit your name</h6>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-3">
+                            <p class="mb-2 modal-body-label">Edit name</p>
+                            <div class="mb-2 d-flex justify-content-between align-items-center">
+                                <div class="me-1">
+                                    <label for="fNameInput" class="ps-2 m-0 label-modal text-muted">First name</label>
+                                    <input id="fNameInput" class="modalField px-3 py-1 w-100" type="text" placeholder="John" th:value="${session.User.firstName}" th:name="firstName"/>
+                                </div>
+                                <div class="ms-1">
+                                    <label for="fNameInput" class="ps-2 m-0 label-modal text-muted">Last name</label>
+                                    <input id="lNameInput"class="modalField px-3 py-1 w-100" type="text" placeholder="Doe" th:value="${session.User.lastName}" th:name="lastName"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="cancelModal" data-dismiss="modal">Cancel</button>
+                        <button id="editProfileNameButton" class="confirmModal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal delete Account triggered  #deleteSessionUser -->
+        <div class="modal fade center" id="deleteSessionUserModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6>Delete your profile</h6>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-2 modal-body-label text-center my-2">Are you sure you want to delete your account?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="cancelModal" data-dismiss="modal">Cancel</button>
+                        <button id="deleteProfileButton" class="confirmModal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal edit user password triggered by editSessionUserPassword-->
+        <div class="modal fade center" id="editSessionUserPasswordModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6>Edit your passowrd</h6>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-3">
+                            <p class="mb-2 modal-body-label">Change password</p>
+
+                            <label for="currentPass" class="ps-2 m-0 label-modal text-muted">Current password</label>
+                            <input id="currentPass" class="modalField px-3 py-1 w-100" type="text" placeholder="Your current password" th:name="currentPass"/>
+
+                            <label for="newPass" class="ps-2 mt-3 mb-0 label-modal text-muted">New password</label>
+                            <input id="newPass" class="modalField px-3 py-1 w-100 mb-1" type="password" placeholder="New password" th:name="newPass"/>
+
+                            <label for="confirmPass" class="ps-2 m-0 label-modal text-muted">Confirm password</label>
+                            <input id="confirmPass" class="modalField px-3 py-1 w-100" type="password" placeholder="Confirm password" th:name="confirmPass"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="cancelModal" data-dismiss="modal">Cancel</button>
+                        <button id="editProfilePasswordButton" class="confirmModal">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var sessionID = $('.id-display').html();
+        var sessionEmail = $('.email-display').html();
+
+        <!-- Deleting session user action -->
+        $("#deleteProfileButton").click(function(){
+            $.ajax({
+              url: "/user/deleteSessionUser",
+              type: "POST",
+              data:{
+                id: sessionID
+                },
+              success: function(data)
+              {
+                window.location = '/user/login';
+              }
+           });
+        });
+
+        <!-- Editing session user first and last name action -->
+        $('#editProfileNameButton').click(function(){
+            var fNameEdit = $('#fNameInput').val();
+            var lNameEdit = $('#lNameInput').val();
+            alert(fNameEdit);
+            $.ajax({
+              url: "/user/editSessionName",
+              type: "POST",
+              data:{
+                id: sessionID,
+                firstName: fNameEdit,
+                lastName: lNameEdit
+                },
+              success: function(data)
+              {
+                location.reload();
+              }
+           });
+        });
+
+        <!-- Editing password user first and last name action -->
+        $('#editProfilePasswordButton').click(function(){
+            var curPassEdit = $('#currentPass').val();
+            var newPassEdit = $('#newPass').val();
+            var conPassEdit = $('#confirmPass').val();
+
+
+            if(curPassEdit != null){
+                if(newPassEdit == conPassEdit && newPassEdit != ""){
+                    $.ajax({
+                        url: "/user/validateSessionUserPassword",
+                        type: "POST",
+                        data: {
+                            id: sessionID,
+                            password: curPassEdit
+                        },
+                        success: function(data){
+                            if(data == "true"){
+                                 $.ajax({
+                                    url: "/user/editSessionUserPassword",
+                                    type: "POST",
+                                    data: {
+                                        id: sessionID,
+                                        password: newPassEdit
+                                    },
+                                    success: function(data){
+                                        if(data != null){
+                                            alert("Password changed. You are prompted to login again after this.");
+                                            window.location = '/user/login';
+                                        }
+                                    }
+                                })
+                            } else {
+                                alert("Wrong input on current password!");
+                            }
+                        }
+                    })
+                } else {
+                    alert("Password does not match");
+                }
+            } else {
+                alert("Wrong input on current password!");
+            }
+        });
+    </script>
+</html>
