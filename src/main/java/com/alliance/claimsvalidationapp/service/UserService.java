@@ -3,6 +3,8 @@ package com.alliance.claimsvalidationapp.service;
 import com.alliance.claimsvalidationapp.entity.User;
 import com.alliance.claimsvalidationapp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,21 +14,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     public User registerUserService(User user){
 
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new IllegalStateException("Email already exist");
         }
+        passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPass = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPass);
         user.setUserStatus("active");
         return userRepository.save(user);
     }
 
     public User loginUserService(String email, String pass){
-        User user = userRepository.findByEmailAndPassword(email, pass);
-        if(userRepository.existsById(user.getId())) {
-            if(!user.getUserStatus().equals("deleted"))
+        if(userRepository.findByEmail(email).isPresent()){
+            User user = userRepository.findByEmail(email).get();
+            passwordEncoder = new BCryptPasswordEncoder();
+            if(passwordEncoder.matches(pass, user.getPassword())){
                 return user;
+            }
         }
         throw new IllegalStateException("User not found!");
     }
@@ -35,6 +43,9 @@ public class UserService {
         User oldUser = null;
         if(userRepository.findById(id).isPresent()){
             oldUser = userRepository.findById(id).get();
+            oldUser.setEmail(null);
+            oldUser.setPassword(null);
+            oldUser.setUsertype(null);
             oldUser.setUserStatus("deleted");
         } else {
             throw new IllegalStateException("User not found");
@@ -50,7 +61,9 @@ public class UserService {
         User sessionUser = null;
         if(userRepository.findById(id).isPresent()){
             sessionUser = userRepository.findById(id).get();
-            sessionUser.setPassword(password);
+            passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPass = passwordEncoder.encode(sessionUser.getPassword());
+            sessionUser.setPassword(encodedPass);
         } else {
             throw new IllegalStateException("User not found");
         }
@@ -60,8 +73,9 @@ public class UserService {
     public String validateSessionUserPasswordService(Long id, String password) {
         User sessionUser = null;
         if(userRepository.findById(id).isPresent()){
+            passwordEncoder = new BCryptPasswordEncoder();
             sessionUser = userRepository.findById(id).get();
-            if(sessionUser.getPassword().equals(password)){
+            if(passwordEncoder.matches(password, sessionUser.getPassword())){
                 return "true";
             } else {
                 return "false";
