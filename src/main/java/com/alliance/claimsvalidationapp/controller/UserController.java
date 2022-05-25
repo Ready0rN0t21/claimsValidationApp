@@ -37,14 +37,13 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginRedirect")
     @ResponseBody
     public String loginUserController(@ModelAttribute User user, HttpSession httpSession){
         User sessionUser = userService.loginUserService(user.getEmail(), user.getPassword());
-
-        httpSession.setAttribute("User", sessionUser);
         System.out.println(sessionUser);
         if(sessionUser != null){
+            httpSession.setAttribute("User", sessionUser);
             if(sessionUser.getUsertype().contains("Accounting")){
                 return "accounting";
             } else {
@@ -79,7 +78,7 @@ public class UserController {
         if (sessionUser != null) {
             sessionUser.invalidate();
         }
-        return "login";
+        return "redirect:/user/login";
     }
 
     @PostMapping("/deleteSessionUser")
@@ -109,8 +108,9 @@ public class UserController {
 
     @PostMapping("/editSessionName")
     @ResponseBody
-    public void editSessionNameController(Long id, String firstName, String lastName){
-        userService.editSessionNameService(id, firstName, lastName);
+    public void editSessionNameController(Long id, String firstName, String lastName, HttpSession httpSession){
+        User user = userService.editSessionNameService(id, firstName, lastName);
+        httpSession.setAttribute("User", user);
     }
 
 

@@ -29,15 +29,14 @@ public class UserService {
     }
 
     public User loginUserService(String email, String pass){
-        User user = null;
         if(userRepository.findByEmail(email).isPresent()){
-            user = userRepository.findByEmail(email).get();
+            User user = userRepository.findByEmail(email).get();
             passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(pass, user.getPassword())){
                 return user;
             }
         }
-        return user;
+        return null;
     }
 
     public User deleteUserService(Long id){

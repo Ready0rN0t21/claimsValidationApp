@@ -168,7 +168,6 @@
         $('#editProfileNameButton').click(function(){
             var fNameEdit = $('#fNameInput').val();
             var lNameEdit = $('#lNameInput').val();
-            alert(fNameEdit);
             $.ajax({
               url: "/user/editSessionName",
               type: "POST",
