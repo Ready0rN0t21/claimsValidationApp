@@ -29,14 +29,15 @@ public class UserService {
     }
 
     public User loginUserService(String email, String pass){
+        User user = null;
         if(userRepository.findByEmail(email).isPresent()){
-            User user = userRepository.findByEmail(email).get();
+            user = userRepository.findByEmail(email).get();
             passwordEncoder = new BCryptPasswordEncoder();
             if(passwordEncoder.matches(pass, user.getPassword())){
                 return user;
             }
         }
-        throw new IllegalStateException("User not found!");
+        return user;
     }
 
     public User deleteUserService(Long id){

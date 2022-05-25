@@ -79,6 +79,7 @@ public class ClaimService {
         if(now.isAfter(overDueDays) && claim.getRelease_date() == null && claim.getCollection_date() == null) {
             status = "overdue";
         }
+
         return status;
     }
 

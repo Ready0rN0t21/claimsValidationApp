@@ -12,18 +12,55 @@
             <img class="mx-auto d-block img-fluid" th:src="@{/images/alliance_logo.svg}">
         </div>
         <h4 class="titleHeader mt-3 mb-4 mx-auto w-100">Claims Validation</h4>
-        <div class="loginFieldsHolder p-2 mt-5">
-            <form th:action="@{/user/homepage}" class="text-center" method="POST">
-
-                <div class="emailHolder text-center mb-4">
-                    <input class="loginField px-2 py-2" type="email" id="email" th:name="email" placeholder="Email Address">
-                    <input class="loginField px-3 py-2 mt-3" type="password" id="password" th:name="password" placeholder="Password">
-                </div>
-                <center class="my-2">
-                    <input class="loginbtn text-white fw-bold px-4 py-2 mt-3" type="submit" name="loginbtn" value="Login">
-                </center>
-            </form>
+        <div class="loginFieldsHolder p-2 mt-5 text-center">
+            <div class="emailHolder text-center mb-4">
+                <input class="loginField px-2 py-2" type="email" id="email" th:name="email" placeholder="Email Address" required>
+                <input class="loginField px-3 py-2 mt-3" type="password" id="password" th:name="password" placeholder="Password" required>
+            </div>
+            <center class="my-2">
+                <input class="loginbtn text-white fw-bold px-4 py-2 mt-3" type="submit" name="loginbtn" value="Login">
+            </center>
         </div>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(".loginbtn").click(function(){
+        var emailIn = $("#email").val();
+        var passIn = $("#password").val();
+
+        if(emailIn == "" || passIn == ""){
+            alert("Please fill in all the fields");
+        } else {
+            $.ajax({
+              url: "/user/login",
+              type: "POST",
+              data:{
+                email: emailIn,
+                password: passIn
+                },
+              success: function(data)
+              {
+
+                if(data == "User does not exist"){
+                    alert("Wrong input on username or password");
+                }
+
+                if(data == "accounting"){
+                    window.location = "/user/homepageAcc";
+                }
+
+                if(data == "employee"){
+                    window.location = "/user/homepageEmp";
+                }
+
+              }
+           });
+        }
+
+    });
+</script>
 </html>

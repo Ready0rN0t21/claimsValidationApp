@@ -37,22 +37,39 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/homepage")
-    public ModelAndView loginUserController(@ModelAttribute User user, HttpSession httpSession){
-        List<User> listOfUser= userService.getAllUserService();
-        ModelAndView modelAndView = new ModelAndView();
+    @PostMapping("/login")
+    @ResponseBody
+    public String loginUserController(@ModelAttribute User user, HttpSession httpSession){
         User sessionUser = userService.loginUserService(user.getEmail(), user.getPassword());
-        modelAndView.addObject("user", sessionUser);
-        modelAndView.addObject("listOfUsers", listOfUser);
-        modelAndView.addObject("listOfClaims", claimService.getAllClaims());
 
         httpSession.setAttribute("User", sessionUser);
-
-        if(sessionUser.getUsertype().contains("Accounting")){
-            modelAndView.setViewName("accountingPage");
+        System.out.println(sessionUser);
+        if(sessionUser != null){
+            if(sessionUser.getUsertype().contains("Accounting")){
+                return "accounting";
+            } else {
+                return "employee";
+            }
         } else {
-            modelAndView.setViewName("employeePage");
+            return "User does not exist";
         }
+    }
+
+    @GetMapping("/homepageAcc")
+    public ModelAndView accountingPageRedirect(HttpSession httpSession){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("listOfUsers", userService.getAllUserService());
+        modelAndView.addObject("listOfClaims", claimService.getAllClaims());
+        modelAndView.addObject("user", httpSession.getAttribute("User"));
+        modelAndView.setViewName("accountingPage");
+        return modelAndView;
+    }
+
+    @GetMapping("/homepageEmp")
+    public ModelAndView employeePageRedirect(HttpSession httpSession){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", httpSession.getAttribute("User"));
+        modelAndView.setViewName("employeePage");
         return modelAndView;
     }
 
