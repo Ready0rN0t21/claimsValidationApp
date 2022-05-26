@@ -62,7 +62,7 @@ public class UserService {
         if(userRepository.findById(id).isPresent()){
             sessionUser = userRepository.findById(id).get();
             passwordEncoder = new BCryptPasswordEncoder();
-            String encodedPass = passwordEncoder.encode(sessionUser.getPassword());
+            String encodedPass = passwordEncoder.encode(password);
             sessionUser.setPassword(encodedPass);
         } else {
             throw new IllegalStateException("User not found");

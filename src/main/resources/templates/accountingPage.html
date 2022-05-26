@@ -168,7 +168,7 @@
             </div>
         </div>
     </div>
-
+    <button id="modalLoadingTrigger" data-toggle="modal" data-target="#modalBeforeSend" class="d-none"></button>
 
     <!-- Modal edit user name triggered by editSessionUserName-->
     <div class="modal fade center" id="editSessionUserNameModal">
@@ -260,6 +260,22 @@
                 <div class="modal-footer">
                     <button class="cancelModal" data-dismiss="modal">Cancel</button>
                     <button id="deleteUserButton" class="confirmModal">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- beforeSend loading modal -->
+    <div class="modal fade center" id="modalBeforeSend">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2 modal-body-label text-center my-2 fw-bold">Transaction is being processed. Please wait!</p>
+                </div>
+                <div class="modal-footer">
+                    <button id="cancelModal" class=" d-none" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -608,6 +624,8 @@ var selectedUser, selectedClaim;
                     id: selectedClaim,
                     net_amt: netInput,
                     commission: comInput
+                }, beforeSend: function() {
+                    $("#modalLoadingTrigger").trigger("click");
                 },
                 success: function(data){
                     location.reload();
@@ -624,6 +642,8 @@ var selectedUser, selectedClaim;
             type: "POST",
             data: {
                 id: selectedClaim
+            }, beforeSend: function() {
+                $("#modalLoadingTrigger").trigger("click");
             },
             success: function(data){
                 location.reload();
