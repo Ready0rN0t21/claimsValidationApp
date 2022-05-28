@@ -589,21 +589,27 @@ var selectedUser, selectedClaim;
                     $('#collectionDateOverview').html(data['collection_date']);
                 }
 
-                if(statusClaim == "for commission release"){
+                if(data['user']['email'] != null){
+                    if(statusClaim == "for commission release"){
                     $('.com-div').css("display", "flex");
                     $('.done-div').css("display", "none");
-                }
-                if(statusClaim == "for collection"){
-                    $('.com-div').css("display", "none");
-                    $('.done-div').css("display", "flex");
-                }
-                if(statusClaim == "collected"){
-                    $('.com-div').css("display", "none");
+                    }
+                    if(statusClaim == "for collection"){
+                        $('.com-div').css("display", "none");
+                        $('.done-div').css("display", "flex");
+                    }
+                    if(statusClaim == "collected"){
+                        $('.com-div').css("display", "none");
+                        $('.done-div').css("display", "none");
+                    }
+                    if(statusClaim == "overdue"){
+                        $('.com-div').css("display", "none");
+                        $('.done-div').css("display", "none");
+                    }
+                } else {
+                    $('#userNameOverview').append(" (User Deleted)");
                     $('.done-div').css("display", "none");
-                }
-                if(statusClaim == "overdue"){
                     $('.com-div').css("display", "none");
-                    $('.done-div').css("display", "none");
                 }
             }
         })
